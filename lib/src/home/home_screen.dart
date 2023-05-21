@@ -1,8 +1,10 @@
 import 'dart:async';
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:jasmine_app/src/home/home_screen_web.dart';
+import 'package:jasmine_app/util/common_util.dart';
+import 'package:jasmine_app/widget/responsive.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,34 +14,9 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Column(children: [
-        CustomAppBar(),
-        Expanded(
-            child: SingleChildScrollView(
-          child: Column(
-            children: [
-              LandingPage(),
-              CustomFooter(),
-            ],
-          ),
-        )),
-      ]),
-    );
-  }
-}
+  final TextEditingController _searchController = TextEditingController();
 
-class LandingPage extends StatefulWidget {
-  LandingPage({super.key});
-
-  @override
-  State<LandingPage> createState() => _LandingPageState();
-}
-
-class _LandingPageState extends State<LandingPage> {
-  final List<String> imageUrls = [
+  final List<String> imgList = [
     'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
     'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
     'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
@@ -48,204 +25,136 @@ class _LandingPageState extends State<LandingPage> {
     'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
   ];
 
-  PageController? _pageController;
-  Timer? _timer;
-  int _currentPageIndex = 0;
+  int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    super.initState();
-    _pageController = PageController(initialPage: _currentPageIndex);
-
-    // Start the timer for auto-scrolling
-    // _timer = Timer.periodic(Duration(seconds: 4), (_) {
-    //   if (_currentPageIndex < imageUrls.length - 1) {
-    //     _currentPageIndex++;
-    //   } else {
-    //     _currentPageIndex = 0;
-    //   }
-    // });
-  }
-
-  @override
-  void dispose() {
-    _pageController?.dispose();
-    _timer?.cancel();
-    super.dispose();
-  }
-
-  void navigate() {
-    if (_pageController?.hasClients == true) {
-      _currentPageIndex += 1;
-    } else {
-      _currentPageIndex = 0;
-    }
-
-     _pageController?.animateToPage(
-        _currentPageIndex,
-        duration: Duration(seconds: 2),
-        curve: Curves.easeInOut,
-      );
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-
-    return Builder(
-      builder: (context) {
-        return Container(
-          height: size.height,
-          child: PageView.builder(
-            controller: _pageController,
-            onPageChanged: (index) {
-              setState(() {
-                _currentPageIndex = index;
-              });
-            },
-            itemCount: imageUrls.length,
-            itemBuilder: (context, index) {
-              return Stack(
-                children: [
-                  Image.network(
-                    imageUrls[index],
-                    fit: BoxFit.cover,
-                    width: size.width,
-                  ),
-                  Positioned(
-                      left: 20,
-                      top: (size.height / 2) - 50,
-                      child: IconButton(
-                          onPressed: navigate,
-                          icon: Icon(
-                            Icons.navigate_before,
-                            size: 45,
-                          ))),
-                  Positioned(
-                      right: 20,
-                      top: (size.height / 2) - 50,
-                      child: IconButton(
-                          onPressed: navigate,
-                          icon: Icon(
-                            Icons.navigate_next,
-                            size: 45,
-                          )))
-                ],
-              );
-            },
-          ),
-        );
-      },
+    return ResponsiveWidget(
+      largeScreen: HomeScreenWeb(),
+      smallScreen: _home(),
     );
   }
-}
 
-class CustomAppBar extends StatelessWidget {
-  const CustomAppBar({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Image.asset(
-            "assets/logo/Jasmine.png",
-            height: 30,
-          ),
-          Row(
-            children: [
-              Text("New Collections"),
-              SizedBox(width: 15),
-              Text("Mens Clothings"),
-              SizedBox(width: 15),
-              Text("Contact us"),
-              SizedBox(width: 15),
-              TextButton.icon(
-                  onPressed: () {},
-                  icon: Icon(Icons.shopping_bag_outlined),
-                  label: Text("Cart")),
-              SizedBox(width: 15),
-            ],
-          )
-        ],
-      ),
-    );
-  }
-}
-
-class CustomFooter extends StatelessWidget {
-  const CustomFooter({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Column(children: [
-        Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+  Widget _home() {
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(15.0),
+          child: Column(children: [
+            Container(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  SizedBox(height: 20),
-                  Image.asset(
-                    "assets/logo/Jasmine.png",
-                    height: 30,
+                  CommonUtils.logo(height: 20),
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(Icons.shopping_bag_outlined)),
+                ],
+              ),
+            ),
+            TextField(
+              controller: _searchController,
+              onSubmitted: (String? val) {
+                print(val);
+              },
+              decoration: InputDecoration(
+                hintText: 'Search...',
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.clear),
+                  onPressed: () => _searchController.clear(),
+                ),
+                prefixIcon: Icon(Icons.search),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+            ),
+            SizedBox(height: 15),
+            Builder(
+              builder: (context) {
+                final size = MediaQuery.of(context).size;
+                return CarouselSlider(
+                  options: CarouselOptions(
+                    aspectRatio: 1,
+                    viewportFraction: 1.0,
+                    autoPlay: true,
                   ),
-                  SizedBox(height: 20),
-                  _textWithIcon(Icons.navigation, "Tirutani"),
-                  _textWithIcon(Icons.phone, "+91 904234232"),
-                  _textWithIcon(Icons.mail, "contact@jasmine.com"),
-                ],
-              ),
+                  items: imgList
+                      .map((item) => Container(
+                            child: Image.network(
+                              item,
+                              fit: BoxFit.fill,
+                            ),
+                          ))
+                      .toList(),
+                );
+              },
             ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("USEFUL LINKS",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
-                  SizedBox(height: 20),
-                  Text("Size Guide"),
-                  Text("Shopping Policy"),
-                  Text("Returns & Exchanges"),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("COMPANY",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
-                  SizedBox(height: 20),
-                  Text("Terms & Conditions"),
-                  Text("Privacy Policy"),
-                  Text("Contact us"),
-                ],
-              ),
-            ),
-          ],
+            SizedBox(height: 20),
+            GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                    maxCrossAxisExtent: 200,
+                    childAspectRatio: 3 / 2,
+                    crossAxisSpacing: 15,
+                    mainAxisSpacing: 15),
+                itemCount: imgList.length,
+                itemBuilder: (BuildContext ctx, index) {
+                  return Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(6),
+                        gradient: LinearGradient(
+                          colors: [
+                            Colors.black.withOpacity(0.4),
+                            Colors.transparent,
+                            Colors.transparent,
+                            Colors.transparent,
+                            Colors.transparent,
+                            Colors.transparent,
+                            Colors.black.withOpacity(0.4),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        image: DecorationImage(
+                          image: NetworkImage(imgList[index]),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 15.0),
+                        child: Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Text(
+                              "New Arraivals",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18),
+                            )),
+                      ));
+                }),
+          ]),
         ),
-        Divider(),
-        Center(
-          child: Text("Copyright © 2023 Jasmine Store. All rights reserved."),
-        )
-      ]),
-    );
-  }
-
-  Widget _textWithIcon(IconData icon, String text) {
-    return Row(
-      children: [
-        Icon(icon),
-        SizedBox(width: 5),
-        Text(text),
-      ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+          currentIndex: _selectedIndex,
+          onTap: _onItemTapped,
+          items: [
+            BottomNavigationBarItem(
+                icon: Icon(Icons.home_outlined), label: "Home"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.local_offer_outlined), label: "Offer"),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.person_outline), label: "Account"),
+          ]),
     );
   }
 }
