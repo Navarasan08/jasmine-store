@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:jasmine_app/src/home/home_screen_web.dart';
+import 'package:jasmine_app/src/home/offers_screen.dart';
+import 'package:jasmine_app/src/my_account/my_account_screen.dart';
 import 'package:jasmine_app/util/common_util.dart';
 import 'package:jasmine_app/widget/responsive.dart';
 
@@ -37,114 +39,8 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return ResponsiveWidget(
       largeScreen: HomeScreenWeb(),
-      smallScreen: _home(),
-    );
-  }
-
-  Widget _home() {
-    return Scaffold(
-      body: SafeArea(
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.all(15.0),
-          child: Column(children: [
-            Container(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CommonUtils.logo(height: 20),
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(Icons.shopping_bag_outlined)),
-                ],
-              ),
-            ),
-            TextField(
-              controller: _searchController,
-              onSubmitted: (String? val) {
-                print(val);
-              },
-              decoration: InputDecoration(
-                hintText: 'Search...',
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.clear),
-                  onPressed: () => _searchController.clear(),
-                ),
-                prefixIcon: Icon(Icons.search),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                ),
-              ),
-            ),
-            SizedBox(height: 15),
-            Builder(
-              builder: (context) {
-                final size = MediaQuery.of(context).size;
-                return CarouselSlider(
-                  options: CarouselOptions(
-                    aspectRatio: 1,
-                    viewportFraction: 1.0,
-                    autoPlay: true,
-                  ),
-                  items: imgList
-                      .map((item) => Container(
-                            child: Image.network(
-                              item,
-                              fit: BoxFit.fill,
-                            ),
-                          ))
-                      .toList(),
-                );
-              },
-            ),
-            SizedBox(height: 20),
-            GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                    maxCrossAxisExtent: 200,
-                    childAspectRatio: 3 / 2,
-                    crossAxisSpacing: 15,
-                    mainAxisSpacing: 15),
-                itemCount: imgList.length,
-                itemBuilder: (BuildContext ctx, index) {
-                  return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(6),
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.black.withOpacity(0.4),
-                            Colors.transparent,
-                            Colors.transparent,
-                            Colors.transparent,
-                            Colors.transparent,
-                            Colors.transparent,
-                            Colors.black.withOpacity(0.4),
-                          ],
-                          begin: Alignment.topCenter,
-                          end: Alignment.bottomCenter,
-                        ),
-                        image: DecorationImage(
-                          image: NetworkImage(imgList[index]),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 15.0),
-                        child: Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Text(
-                              "New Arraivals",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 18),
-                            )),
-                      ));
-                }),
-          ]),
-        ),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
+      smallScreen: Scaffold(
+         bottomNavigationBar: BottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
           items: [
@@ -155,6 +51,118 @@ class _HomeScreenState extends State<HomeScreen> {
             BottomNavigationBarItem(
                 icon: Icon(Icons.person_outline), label: "Account"),
           ]),
+        body: IndexedStack(
+          index: _selectedIndex,
+          children: [
+          _home(),
+          OfferScreen(),
+          MyAccountScreen(),
+        ]),
+      ),
+    );
+  }
+
+  Widget _home() {
+    return SafeArea(
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(15.0),
+        child: Column(children: [
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CommonUtils.logo(height: 20),
+                IconButton(
+                    onPressed: () {},
+                    icon: Icon(Icons.shopping_bag_outlined)),
+              ],
+            ),
+          ),
+          TextField(
+            controller: _searchController,
+            onSubmitted: (String? val) {
+              print(val);
+            },
+            decoration: InputDecoration(
+              hintText: 'Search...',
+              suffixIcon: IconButton(
+                icon: Icon(Icons.clear),
+                onPressed: () => _searchController.clear(),
+              ),
+              prefixIcon: Icon(Icons.search),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+            ),
+          ),
+          SizedBox(height: 15),
+          Builder(
+            builder: (context) {
+              final size = MediaQuery.of(context).size;
+              return CarouselSlider(
+                options: CarouselOptions(
+                  aspectRatio: 1,
+                  viewportFraction: 1.0,
+                  autoPlay: true,
+                ),
+                items: imgList
+                    .map((item) => Container(
+                          child: Image.network(
+                            item,
+                            fit: BoxFit.fill,
+                          ),
+                        ))
+                    .toList(),
+              );
+            },
+          ),
+          SizedBox(height: 20),
+          GridView.builder(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
+                  maxCrossAxisExtent: 200,
+                  childAspectRatio: 3 / 2,
+                  crossAxisSpacing: 15,
+                  mainAxisSpacing: 15),
+              itemCount: imgList.length,
+              itemBuilder: (BuildContext ctx, index) {
+                return Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(6),
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.black.withOpacity(0.4),
+                          Colors.transparent,
+                          Colors.transparent,
+                          Colors.transparent,
+                          Colors.transparent,
+                          Colors.transparent,
+                          Colors.black.withOpacity(0.4),
+                        ],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                      ),
+                      image: DecorationImage(
+                        image: NetworkImage(imgList[index]),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 15.0),
+                      child: Align(
+                          alignment: Alignment.bottomCenter,
+                          child: Text(
+                            "New Arraivals",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 18),
+                          )),
+                    ));
+              }),
+        ]),
+      ),
     );
   }
 }

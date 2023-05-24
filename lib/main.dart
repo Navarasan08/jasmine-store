@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:jasmine_app/src/auth/login_screen.dart';
 import 'package:jasmine_app/src/home/home_screen.dart';
+import 'package:jasmine_app/util/keyboard_manager.dart';
 
 import 'firebase_options.dart';
 
@@ -18,6 +20,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
     return MaterialApp(
       title: 'Jasmine Store',
       debugShowCheckedModeBanner: false,
