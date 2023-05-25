@@ -6,7 +6,6 @@ import 'package:jasmine_app/src/auth/verify_account_screen.dart';
 import 'package:jasmine_app/util/common_util.dart';
 import 'package:jasmine_app/util/validator.dart';
 import 'package:jasmine_app/widget/custom_button.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ChangePasswordScreen extends StatefulWidget {
   const ChangePasswordScreen({super.key});

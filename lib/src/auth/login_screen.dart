@@ -6,7 +6,6 @@ import 'package:jasmine_app/src/auth/signup_screen.dart';
 import 'package:jasmine_app/src/home/home_screen.dart';
 import 'package:jasmine_app/util/validator.dart';
 import 'package:jasmine_app/widget/custom_button.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -107,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
                   Text("Forgot your Password"),
                   SizedBox(width: 5),
-                  Icon(MdiIcons.arrowRight),
+                  Icon(Icons.arrow_right),
                 ],
               ),
             ),

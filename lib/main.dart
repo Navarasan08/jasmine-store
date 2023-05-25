@@ -1,6 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:jasmine_app/src/auth/login_screen.dart';
 import 'package:jasmine_app/src/home/home_screen.dart';
 import 'package:jasmine_app/util/keyboard_manager.dart';
 
@@ -28,6 +27,10 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
+        appBarTheme: AppBarTheme(
+          elevation: 5.0,
+          centerTitle: true,
+        )
       ),
       home: HomeScreen(),
     );
