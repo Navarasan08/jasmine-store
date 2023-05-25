@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class CommonUtils {
   static Widget logo({double? height}) {
@@ -22,7 +21,7 @@ class CommonUtils {
                 SizedBox(height: 20),
                 Center(
                   child: Icon(
-                    MdiIcons.checkCircleOutline,
+                   Icons.check_circle_outline,
                     color: Colors.green,
                     size: 36,
                   ),

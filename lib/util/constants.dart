@@ -4,7 +4,7 @@ import 'colors.dart';
 
 class AppConstants {
   AppConstants._();
-  
+
   static const List<String> viewMode = ["Table", "List", "Goal"];
   static const List<String> fieldType = ["String", "int", "date"];
 
@@ -56,6 +56,6 @@ class AppConstants {
       );
 }
 
-class BreakPoints {
-  static const double web = 800;
+class AssetManager {
+  static const String logo = "assets/logo/Jasmine.png";
 }

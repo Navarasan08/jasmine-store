@@ -2,76 +2,45 @@
 import 'package:flutter/material.dart';
 
 class CustomFooter extends StatelessWidget {
-  const CustomFooter({super.key});
+   CustomFooter({super.key});
+
+  List<String> copyrightImg = [
+    "http://hunterclothing.in/assets/images/icons/visa.png",
+    "http://hunterclothing.in/assets/images/icons/paypal.png",
+    "http://hunterclothing.in/assets/images/icons/mastercard.png",
+    "http://hunterclothing.in/assets/images/icons/american-express.png"
+  ];
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Column(children: [
-        Row(
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(height: 20),
-                  Image.asset(
-                    "assets/logo/Jasmine.png",
-                    height: 30,
-                  ),
-                  SizedBox(height: 20),
-                  _textWithIcon(Icons.navigation, "Tirutani"),
-                  _textWithIcon(Icons.phone, "+91 904234232"),
-                  _textWithIcon(Icons.mail, "contact@jasmine.com"),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("USEFUL LINKS",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
-                  SizedBox(height: 20),
-                  Text("Size Guide"),
-                  Text("Shopping Policy"),
-                  Text("Returns & Exchanges"),
-                ],
-              ),
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("COMPANY",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 20)),
-                  SizedBox(height: 20),
-                  Text("Terms & Conditions"),
-                  Text("Privacy Policy"),
-                  Text("Contact us"),
-                ],
-              ),
-            ),
-          ],
-        ),
-        Divider(),
-        Center(
-          child: Text("Copyright © 2023 Jasmine Store. All rights reserved."),
-        )
-      ]),
+   
+    return Container(
+      child: Column(
+        children: [
+          Text("Copyright © ${DateTime.now().year}. All right reserved."),
+          SizedBox(height: 15),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              for (var img in copyrightImg) _buildCopyright(img),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
-  Widget _textWithIcon(IconData icon, String text) {
-    return Row(
-      children: [
-        Icon(icon),
-        SizedBox(width: 5),
-        Text(text),
-      ],
+  Widget _buildCopyright(String img) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Container(
+        color: Color(0xfff1f1f1),
+        padding: EdgeInsets.all(10),
+        child: Image.network(
+          img,
+          height: 18,
+        ),
+      ),
     );
   }
 }

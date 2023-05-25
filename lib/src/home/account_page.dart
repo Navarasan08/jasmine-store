@@ -1,24 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:jasmine_app/src/auth/login_screen.dart';
 import 'package:jasmine_app/widget/custom_button.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:jasmine_app/widget/custom_footer.dart';
 
-class MyAccountScreen extends StatefulWidget {
-  const MyAccountScreen({super.key});
+class MyAccountPage extends StatefulWidget {
+  const MyAccountPage({super.key});
 
   @override
-  State<MyAccountScreen> createState() => _MyAccountScreenState();
+  State<MyAccountPage> createState() => _MyAccountPageState();
 }
 
-class _MyAccountScreenState extends State<MyAccountScreen> {
+class _MyAccountPageState extends State<MyAccountPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("My Account"),
-        elevation: 5.0,
-      ),
-      body: SingleChildScrollView(
+    return Container(
+      child: SingleChildScrollView(
         child: Column(
           children: [
             Container(
@@ -32,7 +28,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
                       backgroundColor: Colors.black,
                       child: CircleAvatar(
                         radius: 35,
-                        child: Icon(MdiIcons.accountCircle),
+                        child: Icon(Icons.account_circle),
                       ),
                     ),
                     SizedBox(width: 20),
@@ -52,7 +48,7 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
             ),
             rowItem("Customer Care"),
             rowItem("Invite Friends & Earn"),
-            rowItem("Notifications"),
+            // rowItem("Notifications"),
             rowItem("Terms & Conditions"),
             rowItem("Return & Refund Policy"),
             rowItem("We Respect Your Privacy"),
@@ -62,6 +58,10 @@ class _MyAccountScreenState extends State<MyAccountScreen> {
               padding: const EdgeInsets.all(10.0),
               child: Text("Version 0.1"),
             ),
+
+            SizedBox(height: 20),
+
+            CustomFooter(),
           ],
         ),
       ),
