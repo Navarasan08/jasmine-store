@@ -1,8 +1,8 @@
-import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:jasmine_app/src/product/product_detail_screen.dart';
 import 'package:jasmine_app/src/shop_widgets/product_card.dart';
-import 'package:jasmine_app/util/constants.dart';
+import 'package:jasmine_app/src/shop_widgets/product_carousel.dart';
 
 class LandingPage extends StatefulWidget {
   const LandingPage({super.key});
@@ -39,13 +39,14 @@ class _LandingPageState extends State<LandingPage> {
     },
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return Container(
       child: SingleChildScrollView(
         child: Column(children: [
-          _buildCarousal(),
+           ProductCarousel(
+            carouselType: CarouselType.offer,
+          ),
           SizedBox(height: 30),
           for (var info in infoDetails)
             _buildInfoCard(info['icon'], info['title'], info['subtitle']),
@@ -84,6 +85,13 @@ class _LandingPageState extends State<LandingPage> {
         ),
         itemBuilder: (BuildContext context, int index) {
           return ProductCard(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ProductDetailScreen(),
+                    ));
+              },
               image:
                   "https://freepngimg.com/download/dress_shirt/7-2-dress-shirt-png-hd.png",
               name: "Men's Classic Collar Slim Fit Cotton Casual Full Shirt",
@@ -94,28 +102,6 @@ class _LandingPageState extends State<LandingPage> {
         });
   }
 
-  Widget _buildCarousal() {
-    return CarouselSlider(
-      options: CarouselOptions(
-        viewportFraction: 1.0,
-        aspectRatio: 1.5,
-        enlargeCenterPage: false,
-        autoPlay: true,
-        // height: 180,
-        // autoPlay: false,
-      ),
-      items: imgList
-          .map((item) => Container(
-                child: Image.network(
-                  item,
-                  fit: BoxFit.cover,
-                  height: 120,
-                  width: double.infinity,
-                ),
-              ))
-          .toList(),
-    );
-  }
 
   Widget _buildInfoCard(IconData icon, String title, String subtitle) {
     return Padding(
@@ -150,6 +136,4 @@ class _LandingPageState extends State<LandingPage> {
       ),
     );
   }
-
-
 }

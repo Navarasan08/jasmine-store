@@ -33,7 +33,9 @@ class _HomeScreenState extends State<HomeScreen> {
           width: MediaQuery.of(context).size.width / 2,
         ),
         actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.notifications)),
+          IconButton(onPressed: () {
+            
+          }, icon: Icon(Icons.notifications)),
         ],
       ),
       body: IndexedStack(index: _selectedIndex, children: [

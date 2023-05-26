@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jasmine_app/src/product/product_screen.dart';
 
 class CategoriesPage extends StatefulWidget {
   const CategoriesPage({super.key});
@@ -8,8 +9,7 @@ class CategoriesPage extends StatefulWidget {
 }
 
 class _CategoriesPageState extends State<CategoriesPage> {
-
-    List<Map> categories = [
+  List<Map> categories = [
     {
       "name": "SHIRT",
       "img":
@@ -64,7 +64,7 @@ class _CategoriesPageState extends State<CategoriesPage> {
     );
   }
 
-    Widget _buildItemRow(String img, String title) {
+  Widget _buildItemRow(String img, String title) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 8),
       child: Container(
@@ -85,7 +85,12 @@ class _CategoriesPageState extends State<CategoriesPage> {
                 ),
                 SizedBox(height: 8),
                 OutlinedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProductScreen()));
+                  },
                   child: Text(
                     "Shop Now",
                     style: TextStyle(color: Colors.black),
@@ -98,5 +103,4 @@ class _CategoriesPageState extends State<CategoriesPage> {
       ),
     );
   }
-
 }

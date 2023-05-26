@@ -17,7 +17,7 @@ class CustomSubmitButton extends StatelessWidget {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(8))
         ),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: color ?? Theme.of(context).primaryColor,
         padding: EdgeInsets.symmetric(horizontal: 50, vertical: ResponsiveWidget.isLargeScreen(context) ? 18 : 0)
       ),
         onPressed: onPressed,
