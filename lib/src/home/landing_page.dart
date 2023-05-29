@@ -48,9 +48,7 @@ class _LandingPageState extends State<LandingPage> {
             carouselType: CarouselType.offer,
           ),
           SizedBox(height: 30),
-          for (var info in infoDetails)
-            _buildInfoCard(info['icon'], info['title'], info['subtitle']),
-          SizedBox(height: 30),
+          
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(children: <Widget>[
@@ -66,6 +64,9 @@ class _LandingPageState extends State<LandingPage> {
           ),
           _buildItems(),
           SizedBox(height: 15),
+          for (var info in infoDetails)
+            _buildInfoCard(info['icon'], info['title'], info['subtitle']),
+          SizedBox(height: 30),
         ]),
       ),
     );

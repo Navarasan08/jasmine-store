@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:jasmine_app/src/cart/cart_screen.dart';
 import 'package:jasmine_app/src/common/drawer_page.dart';
 import 'package:jasmine_app/src/home/account_page.dart';
 import 'package:jasmine_app/src/home/categories_page.dart';
 import 'package:jasmine_app/src/home/favorite_page.dart';
 import 'package:jasmine_app/src/home/landing_page.dart';
-import 'package:jasmine_app/src/home/shopping_bag.dart';
 import 'package:jasmine_app/util/constants.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -41,7 +41,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: IndexedStack(index: _selectedIndex, children: [
         LandingPage(),
         CategoriesPage(),
-        ShoppingBagPage(),
+        CartScreen(),
         FavoritePage(),
         MyAccountPage(),
       ]),
