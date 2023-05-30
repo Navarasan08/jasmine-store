@@ -58,12 +58,12 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     ListTile(
                       onTap: expandAddressSec,
                       title: Text(
-                            "Shipping Address",
-                            style: TextStyle(fontSize: 18),
-                          ),
-                          trailing:  Icon(isAddressSectionExpanded
-                                  ? Icons.arrow_drop_up
-                                  : Icons.arrow_drop_down),
+                        "Shipping Address",
+                        style: TextStyle(fontSize: 18),
+                      ),
+                      trailing: Icon(isAddressSectionExpanded
+                          ? Icons.arrow_drop_up
+                          : Icons.arrow_drop_down),
                     ),
                     // GestureDetector(
                     //   onTap: expandAddressSec,
@@ -74,7 +74,7 @@ class _SummaryScreenState extends State<SummaryScreen> {
                     //         "Shipping Address",
                     //         style: TextStyle(fontSize: 18),
                     //       ),
-                         
+
                     //     ],
                     //   ),
                     // ),
@@ -141,6 +141,18 @@ class _SummaryScreenState extends State<SummaryScreen> {
                                   border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12))),
                             ),
+                            SizedBox(height: 10),
+                            Align(
+                                child: OutlinedButton(
+                                    onPressed: expandAddressSec,
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text("Next"),
+                                        SizedBox(width: 5),
+                                        Icon(Icons.arrow_right_alt)
+                                      ],
+                                    ))),
                           ],
                         ),
                       ),
